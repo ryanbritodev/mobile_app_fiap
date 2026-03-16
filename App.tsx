@@ -6,29 +6,16 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Switch,
   ScrollView,
-  FlatList,
   Image,
 } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { morningSchedule, nightSchedule, ScheduleItem as ScheduleItemType } from './mocks/scheduleData';
-import { ScheduleItem } from './components/ScheduleItem';
+import { CheckboxLogin } from './components/Checkbox';
 
 function MainContent() {
     const insets = useSafeAreaInsets();
-    const [isNightPeriod, setIsNightPeriod] = useState(false);
     const [search, setSearch] = useState('');
-
-    const schedules = isNightPeriod ? nightSchedule : morningSchedule;
-
-    const filteredSchedules = schedules.filter((item) =>
-      item.subject.toLowerCase().includes(search.toLowerCase())
-    );
-
-    const renderItem = ({ item }: { item: ScheduleItemType }) => (
-      <ScheduleItem item={item} />
-    );
+    const [keepConnected, setKeepConnected] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -45,48 +32,65 @@ function MainContent() {
             style={styles.logo}
             resizeMode="contain"
           />
-          <Text style={styles.title}>Horário de Aulas</Text>
+          <Text style={styles.title}>Login</Text>
         </View>
 
+        <Text style={styles.subtitle}>Bem-vindo de volta ao App FIAP!</Text>
+        
+        <Text style={styles.subtitle}>E-mail</Text>
         <TextInput
           style={styles.input}
-          placeholder="Pesquisar disciplina..."
+          placeholder="email@exemplo.com"
           placeholderTextColor="#999"
           value={search}
           onChangeText={setSearch}
         />
 
-        <View style={styles.switchContainer}>
-          <Text style={styles.switchLabel}>Manhã</Text>
-          <Switch
-            value={isNightPeriod}
-            onValueChange={setIsNightPeriod}
-            trackColor={{ false: '#ED145B', true: '#ED145B' }}
-            thumbColor={isNightPeriod ? '#363131f1' : '#fff'}
-          />
-          <Text style={styles.switchLabel}>Noite</Text>
+        <View
+          style = {{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+          }}
+        >
+          <Text style={styles.subtitle}>Senha</Text>
+          <TouchableOpacity style={styles.buttonCreate} onPress={() => setSearch('')}>
+          <Text style={styles.buttonForgotText}>Esqueceu sua senha?</Text>
+        </TouchableOpacity>
         </View>
+        <TextInput
+          style={styles.input}
+          placeholder="••••••••••••••••"
+          placeholderTextColor="#999"
+          value={search}
+          onChangeText={setSearch}
+        />
 
-        <Text style={styles.currentPeriod}>
-          Período: {isNightPeriod ? 'Noite' : 'Manhã'}
-        </Text>
-
-        <FlatList
-          data={filteredSchedules}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          style={styles.list}
-          scrollEnabled={false}
-          ListEmptyComponent={
-            <Text style={styles.emptyMessage}>
-              Nenhuma aula cadastrada no período
-            </Text>
-          }
+        <CheckboxLogin
+          keepConnected={keepConnected}
+          setKeepConnected={setKeepConnected}
         />
 
         <TouchableOpacity style={styles.button} onPress={() => setSearch('')}>
-          <Text style={styles.buttonText}>Limpar pesquisa</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+
+        <Text style={styles.subtitleLogin}>Ou entrar com</Text>
+
+        <TouchableOpacity style={styles.buttonGoogle} onPress={() => setSearch('')}>
+
+            <Image
+            source={require('./assets/google.png')}
+            style={styles.logoGoogle}
+            resizeMode="contain"
+          />
+          <Text style={styles.buttonTextGoogle}>Continuar com Google</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonCreate} onPress={() => setSearch('')}>
+          <Text style={styles.buttonCreateText}>Criar uma conta</Text>
+        </TouchableOpacity>
+
       </ScrollView>
     </View>
   );
@@ -114,18 +118,27 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   header: {
-    alignItems: 'center',
-    marginBottom: 20,
+    alignItems: 'stretch',
+    marginBottom: 5,
   },
   logo: {
-    width: 150,
+    width: 60,
     height: 60,
     marginBottom: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  logoGoogle: {
+    width: 30,
+    height: 30,
+    marginBottom: 0,
+    alignItems: 'center',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#ED145B',
+    alignItems: 'flex-start',
   },
   input: {
     backgroundColor: '#1a1a1a',
@@ -148,6 +161,22 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginHorizontal: 10,
   },
+  subtitle: {
+    fontSize: 17,
+    color: '#fff',
+    marginBottom: 15,
+  },
+  subtitleForgot: {
+    fontSize: 15,
+    color: '#fff',
+    marginBottom: 15,
+  },
+  subtitleLogin: {
+    fontSize: 15,
+    color: '#fff',
+    opacity: 0.5,
+    textAlign: 'center',
+  },
   currentPeriod: {
     fontSize: 18,
     color: '#ED145B',
@@ -166,14 +195,55 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#ED145B',
-    borderRadius: 10,
+    borderRadius: 30,
     padding: 15,
     alignItems: 'center',
     marginVertical: 20,
+  },
+   buttonGoogle: {
+    backgroundColor: '#F6F6F6',
+    borderRadius: 30,
+    padding: 15,
+    alignItems: 'center',
+    marginVertical: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+  },
+  buttonCreate: {
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+  },
+   buttonCreateText: {
+    color: '#ED145B',
+    fontSize: 18,
+    fontWeight: 'bold',
+    alignItems: 'center'
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+    alignItems: 'center'
+  },
+  buttonTextGoogle: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonForgot: {
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    marginBottom: 15
+  },
+  buttonForgotText: {
+    color: '#ED145B',
+    fontSize: 15,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    marginBottom: 15
   },
 });
