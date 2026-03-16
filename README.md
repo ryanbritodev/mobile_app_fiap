@@ -194,17 +194,6 @@ npx expo start --ios
 npx expo start --web
 ```
 
----
-
-## 👨‍💻 Autores
-
-Desenvolvido por: 
-- Arthur Cotrick RM554510
-- Ryan Brito RM554497
-- Diogo Leles RM558487
-
----
-
 <div align="center">
   <sub>Projeto acadêmico · Desenvolvimento Mobile · FIAP </sub>
 </div>
