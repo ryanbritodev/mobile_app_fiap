@@ -89,9 +89,6 @@ mobile_app_fiap/
 ├── components/
 │   └── Checkbox.tsx          # Componente reutilizável de checkbox customizado
 │
-├── mocks/
-│   └── scheduleData.ts       # Dados fictícios de grade horária/agenda
-│
 ├── App.tsx                   # Componente raiz — tela de login
 ├── index.ts                  # Ponto de entrada e registro do app no Expo
 ├── app.json                  # Configurações do projeto Expo (nome, slug, ícone)
@@ -139,14 +136,6 @@ const [keepConnected, setKeepConnected] = useState(false);
   setKeepConnected={setKeepConnected}
 />
 ```
-
----
-
-## 🗃️ Dados Mock
-
-### `mocks/scheduleData.ts`
-
-Arquivo com dados estáticos de grade horária/agenda para simular o consumo de uma API durante o desenvolvimento, sem depender de um backend real. Esses dados são utilizados para popular telas que exibem informações de horários e disciplinas.
 
 ---
 
@@ -200,9 +189,10 @@ npx expo start --web
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Ryan Brito** — estudante de tecnologia na FIAP.
-
-[![GitHub](https://img.shields.io/badge/GitHub-ryanbritodev-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/ryanbritodev)
+Desenvolvido por: 
+- Arthur Cotrick RM554510
+- Ryan Brito RM554497
+- Diogo Leles RM558487
 
 ---
 
