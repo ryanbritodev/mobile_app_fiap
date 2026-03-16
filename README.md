@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./assets/fiap_logo.png" width="80" alt="FIAP Logo" />
+![App Screenshot](./assets/app.png)
 
 # Mobile App — FIAP
 
