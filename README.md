@@ -14,6 +14,15 @@ Aplicação mobile desenvolvida com **React Native** e **TypeScript** como proje
 
 ---
 
+## 👨‍💻 Autores
+
+Desenvolvido por: 
+- Arthur Cotrick RM554510
+- Ryan Brito RM554497
+- Diogo Leles RM558487
+
+---
+
 ## 📋 Índice
 
 - [Sobre o Projeto](#-sobre-o-projeto)
@@ -187,7 +196,7 @@ npx expo start --web
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
 Desenvolvido por: 
 - Arthur Cotrick RM554510
@@ -197,5 +206,5 @@ Desenvolvido por:
 ---
 
 <div align="center">
-  <sub>Projeto acadêmico · Curso de Desenvolvimento Mobile · FIAP 📚</sub>
+  <sub>Projeto acadêmico · Desenvolvimento Mobile · FIAP </sub>
 </div>
