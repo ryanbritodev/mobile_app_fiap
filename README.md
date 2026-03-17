@@ -20,7 +20,7 @@ Desenvolvido por:
 - Arthur Cotrick RM554510
 - Ryan Brito RM554497
 - Diogo Leles RM558487
-
+- Vitor Chaves RM557067
 ---
 
 ## 📋 Índice
