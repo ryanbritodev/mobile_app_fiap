@@ -8,22 +8,42 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CheckboxLogin } from './components/Checkbox';
+import { LoginLogger } from './components/LoginLogger';
 
 function MainContent() {
-    const insets = useSafeAreaInsets();
-    const [search, setSearch] = useState('');
-    const [keepConnected, setKeepConnected] = useState(false);
+  const insets = useSafeAreaInsets();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [keepConnected, setKeepConnected] = useState<boolean>(false);
+
+  const handleLogin = (): void => {
+    if (!email.trim() || !password.trim()) {
+      Alert.alert('Atenção', 'Preencha o e-mail e a senha antes de continuar.');
+      return;
+    }
+    else if (email.trim() === 'admin' && password.trim() === '1234')
+    {
+      Alert.alert('Bem-vindo!', 'Usuário e senha corretos');
+    } else {
+      Alert.alert('Usuário ou senha incorretos!', 'Tente novamente');
+    }
+
+    LoginLogger.log(email, password, keepConnected);
+
+    // TODO: chamar sua API de autenticação aqui
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
       <View style={[styles.statusBarBackground, { height: insets.top }]} />
 
-      <ScrollView 
-        showsVerticalScrollIndicator={false} 
+      <ScrollView
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 20 }]}
       >
         <View style={styles.header}>
@@ -36,34 +56,39 @@ function MainContent() {
         </View>
 
         <Text style={styles.subtitle}>Bem-vindo de volta ao App FIAP!</Text>
-        
+
         <Text style={styles.subtitle}>E-mail</Text>
         <TextInput
           style={styles.input}
           placeholder="email@exemplo.com"
           placeholderTextColor="#999"
-          value={search}
-          onChangeText={setSearch}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
         />
 
         <View
-          style = {{
+          style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'flex-end',
           }}
         >
           <Text style={styles.subtitle}>Senha</Text>
-          <TouchableOpacity style={styles.buttonCreate} onPress={() => setSearch('')}>
-          <Text style={styles.buttonForgotText}>Esqueceu sua senha?</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonCreate} onPress={() => {}}>
+            <Text style={styles.buttonForgotText}>Esqueceu sua senha?</Text>
+          </TouchableOpacity>
         </View>
+
         <TextInput
           style={styles.input}
           placeholder="••••••••••••••••"
           placeholderTextColor="#999"
-          value={search}
-          onChangeText={setSearch}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
         />
 
         <CheckboxLogin
@@ -71,15 +96,14 @@ function MainContent() {
           setKeepConnected={setKeepConnected}
         />
 
-        <TouchableOpacity style={styles.button} onPress={() => setSearch('')}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <Text style={styles.subtitleLogin}>Ou entrar com</Text>
 
-        <TouchableOpacity style={styles.buttonGoogle} onPress={() => setSearch('')}>
-
-            <Image
+        <TouchableOpacity style={styles.buttonGoogle} onPress={() => {}}>
+          <Image
             source={require('./assets/google.png')}
             style={styles.logoGoogle}
             resizeMode="contain"
@@ -87,10 +111,9 @@ function MainContent() {
           <Text style={styles.buttonTextGoogle}>Continuar com Google</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonCreate} onPress={() => setSearch('')}>
+        <TouchableOpacity style={styles.buttonCreate} onPress={() => {}}>
           <Text style={styles.buttonCreateText}>Criar uma conta</Text>
         </TouchableOpacity>
-
       </ScrollView>
     </View>
   );
@@ -200,7 +223,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 20,
   },
-   buttonGoogle: {
+  buttonGoogle: {
     backgroundColor: '#F6F6F6',
     borderRadius: 30,
     padding: 15,
@@ -217,17 +240,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 10,
   },
-   buttonCreateText: {
+  buttonCreateText: {
     color: '#ED145B',
     fontSize: 18,
     fontWeight: 'bold',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttonTextGoogle: {
     color: '#000',
@@ -237,13 +260,13 @@ const styles = StyleSheet.create({
   buttonForgot: {
     backgroundColor: 'transparent',
     alignItems: 'center',
-    marginBottom: 15
+    marginBottom: 15,
   },
   buttonForgotText: {
     color: '#ED145B',
     fontSize: 15,
     fontWeight: 'bold',
     alignItems: 'center',
-    marginBottom: 15
+    marginBottom: 15,
   },
 });
